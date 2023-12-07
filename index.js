@@ -2,11 +2,15 @@
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
+const { ok } = require('assert')
 
 /* app néven elindítjuk az express modulunkat */
 const app = express()
 /* meghatározzuk a port változót */
 const port = 3000
+
+/* middleware, ami parse-olja a json-t -> ehhez a requestnél be kell állítani a headers-ben a Content-Type: application/json */
+app.use(express.json())
 
 /* a port felkeresésekor (localhost:port/ vagy 127.0.0.1:port/) elküldjük az index.html fájlt */
 app.get('/', (req, res) => {
@@ -57,6 +61,11 @@ app.get('/users/:userid', (req, res) => {
             }
         })
     }
+})
+
+app.post('/users/new-user', (req, res) => {
+    console.dir(req.body)
+    res.json('ok')
 })
 
 app.listen(port, () => {
