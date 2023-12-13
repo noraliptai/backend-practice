@@ -64,7 +64,64 @@ app.get('/users/:userid', (req, res) => {
 })
 
 app.post('/users/new-user', (req, res) => {
-    console.dir(req.body)
+    /* A beérkezett adat a req.body-ban van */
+    const newUserData = req.body
+
+    /* Beolvassuk a jelenlegi users.json-t, hibakezeléssel */
+    fs.readFile(path.join(__dirname, '/data/users.json'), "utf8", (err, data) => {
+        if (err) {
+            console.log("error reading file", err)
+            res.status(500).json("error reading file")
+        } else {
+            /* Átalakítjuk a beolvasott stringet jsonné */
+            const users = JSON.parse(data)
+            /* Új user objektum létrehozása */
+            const newUser = {
+                id: users[users.length - 1].id + 1,
+                name: newUserData.name
+            }
+            /* Betesszük az új usert az users arraybe */
+            users.push(newUser)
+            /* Beírjuk a users.json-be a kibővített users arrayt, hibakezeléssel */
+            fs.writeFile(path.join(__dirname, '/data/users.json'), JSON.stringify(users, null, 2), (err) => {
+                if (err) {
+                    console.log(`error at writing file: ${err}`)
+                    res.json(`error at writing file: ${err}`)
+                } else {
+                    console.log("file writing was successful")
+                    res.status(201).json(newUser)
+                }
+            })
+        }
+    })
+})
+
+app.delete('/users/delete/:userid', (req, res) => {
+    fs.readFile(path.join(__dirname, '/data/users.json'), "utf8", (err, data) => {
+        if (err) {
+            console.log(`error at reading file: ${err}`)
+            res.json(err)
+        } else {
+            const users = JSON.parse(data)
+            const newUsers = users.filter(user => user.id !== req.body.id)
+            const deletedUser = users.filter(user => user.id === req.body.id)
+
+            if (deletedUser) {
+                fs.writeFile(path.join(__dirname, '/data/users.json'), JSON.stringify(newUsers, null, 2), (err) => {
+                    if (err) {
+                      console.log(`error writing file: ${err}`)
+                      res.status(500).json(err)  
+                    } else {
+                        console.log(`deleted user: ${deletedUser.id}, deleted data: ${JSON.stringify(deletedUser)}`)
+                        res.status(200).json(`deleted user: ${deletedUser.id}, deleted data: ${JSON.stringify(deletedUser)}`)
+                    }
+                })
+            } else {
+                console.log(`user: ${req.body.id} not found`)
+                res.json(`user: ${req.body.id} not found`)
+            }
+        }
+    })
     res.json('ok')
 })
 

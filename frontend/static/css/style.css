@@ -1,3 +1,91 @@
-div#root {
-    color: red;
-}
+* {
+    margin: 0;
+    padding: 0;
+  
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+  
+  /* --- HEADER START --- */
+  
+  html {
+    font-family: 'Rethink Sans', sans-serif;
+  }
+  
+  header {
+    display: flex;
+    justify-content: center;
+  
+    padding: 20px;
+  }
+  
+  header form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  header form div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  header input {
+    width: 100%;
+    max-width: 200px;
+  
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  header button {
+    width: 100px;
+  
+    padding: 6px 0;
+  
+    text-transform: uppercase;
+    font-size: 24px;
+    letter-spacing: 0.12em;
+  }
+  
+  /* --- HEADER END --- */
+  
+  /* --- CARDS START --- */
+  
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  
+    padding: 20px;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    width: 100%;
+    max-width: 350px;
+  
+    padding: 10px;
+  
+    border: 2px solid black;
+
+    position: relative;
+  }
+
+  .card span {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  /* --- CARDS END --- */

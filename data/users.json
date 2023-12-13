@@ -1,14 +1,30 @@
 [
-    {
-        "id": 1,
-        "name": "Harry Potter"
-    },
-    {
-        "id": 2,
-        "name": "Ron Weasley"
-    },
-    {
-        "id": 3,
-        "name": "Hermione Granger"
-    }
+  {
+    "id": 1,
+    "name": "Harry Potter"
+  },
+  {
+    "id": 2,
+    "name": "Ron Weasley"
+  },
+  {
+    "id": 3,
+    "name": "Hermione Granger"
+  },
+  {
+    "id": 4,
+    "name": "Luna Lovegood"
+  },
+  {
+    "id": 5,
+    "name": "Draco Malfoy"
+  },
+  {
+    "id": 6,
+    "name": "Neville Longbottom"
+  },
+  {
+    "id": 7,
+    "name": "Ginny Weasley"
+  }
 ]
