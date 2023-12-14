@@ -165,7 +165,95 @@ app.delete('/users/delete', (req, res) => {
   })
 })
 
+
+app.patch('/users/patch', (req, res) => {
+  const userId = parseInt(req.body.id)
+
+  if (isNaN(userId)) {
+    console.log(`user id must be a number, got: ${req.body.id}`)
+    res.json(`user id must be a number, got: ${req.body.id}`)
+  } else {
+    const newData = req.body.newData
+    const keysToChange = Object.keys(newData)
+
+    fs.readFile(path.join(__dirname, '/data/users.json'), 'utf8', (err, data) => {
+      if (err) {
+        console.log(`error at reading file: ${err}`)
+
+        res.status(500).json(err)
+      } else {
+        const users = JSON.parse(data)
+
+        const foundUser = users.find(user => user.id === userId)
+
+        if (foundUser) {
+          keysToChange.forEach(key => {
+            if (Object.keys(foundUser).includes(key)) {
+              foundUser[key] = newData[key]
+            } else {
+              console.log(`${key} is not a valid key on user`)
+            }
+          })
+
+          fs.writeFile(path.join(__dirname, '/data/users.json'), JSON.stringify(users, 0, 2), (err) => {
+            if (err) {
+              console.log(`error at writing file: ${err}`)
+
+              res.json(`error at reading file: ${err}`)
+            } else {
+              console.log(`user ${userId} has been successfully changed, new data: ${JSON.stringify(newData)}`)
+
+              res.json(`user ${userId} has been successfully changed, new data: ${JSON.stringify(newData)}`)
+            }
+          })
+
+        } else {
+          console.log(`user ${userId} is not found`)
+
+          res.json(`user ${userId} is not found`)
+        }
+      }
+    })
+
+    /* fs.readFile(path.join(__dirname, '/data/users.json'), 'utf8', (err, data) => {
+      if (err) {
+        console.log(`error at reading file: ${err}`)
+
+        res.status(500).json(err)
+      } else {
+        const users = JSON.parse(data)
+
+        //console.log('original users', users)
+
+        const foundUser = users.find(user => user.id === userId)
+        //console.log('found user', foundUser)
+        foundUser.name = newName
+        //console.log('changed user', foundUser)
+
+        //console.log('changed users? ', users)
+
+        fs.writeFile(path.join(__dirname, '/data/users.json'), JSON.stringify(users, 0, 2), (err) => {
+          if (err) {
+            console.log(`error at writing file: ${err}`)
+
+            res.status(500).json(err)
+          } else {
+            console.log(`successfully updated user ${userId}, with new data: ${newName}`)
+
+            res.status(202).json(`successfully updated user ${userId}, with new data: ${newName}`)
+          }
+        })
+      }
+    }) */
+  }
+})
+
 /* elkezdi figyelni az adott portot a számítógépen (localhost vagy 127.0.0.1) */
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+
+
+

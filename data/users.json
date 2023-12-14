@@ -1,14 +1,14 @@
 [
-    {
-        "id": 1,
-        "name": "Harry Potter"
-    },
-    {
-        "id": 2,
-        "name": "Ron Weasley"
-    },
-    {
-        "id": 3,
-        "name": "Hermione Granger"
-    }
+  {
+    "id": 1,
+    "name": "Harry Potter"
+  },
+  {
+    "id": 2,
+    "name": "Ron Weasley"
+  },
+  {
+    "id": 3,
+    "name": "Hermione Granger"
+  }
 ]
